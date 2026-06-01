@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio | Nukala Jaya Surya</title>
+    
+    <!-- Tailwind CSS: We use this to style the website using classes directly in HTML -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome: Used for the icons (github, linkedin, menu bars) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts: To make the text look modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration (Setting our custom colors) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6', // The main Blue color
+                        dark: '#0f172a',    // The dark background color
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Basic CSS for simple animations -->
+    <style>
+        /* This makes the skill badges jump up slightly when you hover over them */
+        .skill-badge:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+
+        /* This creates the blinking cursor for the typing effect */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: #3b82f6;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* LIGHT MODE STYLES (Simple overrides for beginner friendliness) */
+        /* When 'light-mode' is active on the body, these colors take over! */
+        body.light-mode { background-color: #f8fafc; color: #0f172a; }
+        body.light-mode .bg-dark { background-color: #f1f5f9; }
+        body.light-mode .bg-slate-900 { background-color: #ffffff; }
+        body.light-mode .text-white { color: #0f172a !important; }
+        body.light-mode .text-slate-400 { color: #475569 !important; }
+        body.light-mode .text-slate-300 { color: #334155 !important; }
+        body.light-mode .border-slate-800 { border-color: #e2e8f0 !important; }
+        body.light-mode .border-slate-700 { border-color: #cbd5e1 !important; }
+        body.light-mode .bg-slate-800 { background-color: #e2e8f0 !important; color: #0f172a !important; }
+        body.light-mode .text-slate-200 { color: #0f172a !important; }
+        
+        /* Fix to make the transparent Navigation Header turn light in Light Mode */
+        body.light-mode .bg-dark\/90 { background-color: rgba(255, 255, 255, 0.9) !important; }
+    </style>
+</head>
+<body class="bg-dark text-slate-200 font-sans overflow-x-hidden w-full">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full z-50 top-0 bg-dark/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="text-2xl font-bold text-white">
+                    [Jaya Surya]<span class="text-primary">.</span>
+                </a>
+                
+                <!-- Desktop Menu (Hidden on phones) -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="hover:text-primary transition-colors">About</a>
+                    <a href="#experience" class="hover:text-primary transition-colors">Experience</a>
+                    <a href="#certifications" class="hover:text-primary transition-colors">Certifications</a>   
+                    <a href="#projects" class="hover:text-primary transition-colors">Projects</a>
+                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+                    
+                    <!-- Theme Changer Button -->
+                    <button id="theme-toggle" class="text-slate-300 hover:text-white transition-colors focus:outline-none" title="Toggle Light/Dark Mode">
+                        <i id="theme-icon" class="fas fa-sun text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button (Only shows on phones) -->
+                <button id="mobile-menu-button" class="md:hidden text-white p-2">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown (Hidden by default) -->
+        <div id="mobile-menu" class="hidden bg-slate-900 border-b border-slate-700 md:hidden">
+            <div class="px-4 py-4 space-y-4 flex flex-col text-center">
+                <a href="#about" class="block text-white hover:text-primary">About</a>
+                <a href="#experience" class="block text-white hover:text-primary">Experience</a>
+                <a href="#certifications" class="block text-white hover:text-primary">Certifications</a>
+                <a href="#projects" class="block text-white hover:text-primary">Projects</a>
+                <a href="#contact" class="block text-white hover:text-primary">Contact</a>
+                
+                <!-- Mobile Theme Changer Button -->
+                <button id="mobile-theme-toggle" class="block text-white hover:text-primary mx-auto flex items-center gap-2 justify-center">
+                    <i id="mobile-theme-icon" class="fas fa-sun text-xl"></i> Switch Theme
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home / Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row items-center gap-12">
+            
+            <!-- Left Side: Text and Intro -->
+            <div class="flex-1 text-center md:text-left">
+                <p class="text-primary font-medium tracking-wider uppercase mb-4">ECE Student & Developer</p>
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
+                    Hi, I'm <span class="text-primary">Nukala Jaya Surya</span>
+                </h1>
+                
+                <!-- Typing Effect Container (Added min-h to prevent vertical shaking) -->
+                <h2 class="text-2xl md:text-3xl text-slate-400 mb-6 min-h-[60px] md:min-h-[40px]">
+                    I build <span id="typing-text" class="text-white"></span><span class="typing-cursor"></span>
+                </h2>
+                
+                <p class="text-lg text-slate-400 mb-10 max-w-2xl">
+                    Eager to apply my skills in Electronics and Communication Engineering, programming, and problem-solving to contribute to organizational growth.
+                </p>
+                
+                <!-- Links & Resume Button -->
+                <div class="flex flex-wrap items-center gap-6 justify-center md:justify-start">
+                    <!-- Download Resume Button -->
+                    <a href="Jaya_Surya_nukala_resume.pdf" download class="bg-primary hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-full transition-colors flex items-center gap-2 shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-file-download"></i> Download Resume
+                    </a>
+                    
+                    <!-- Social Icons -->
+                    <div class="flex gap-4">
+                        <a href="https://github.com/surya-nukala" target="_blank" class="text-slate-400 hover:text-white text-3xl transition-transform hover:scale-110" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/jaya-surya-nukala" target="_blank" class="text-slate-400 hover:text-blue-500 text-3xl transition-transform hover:scale-110" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:nukalajayasurya@gmail.com" class="text-slate-400 hover:text-white text-3xl transition-transform hover:scale-110" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side: Profile Picture -->
+            <div class="flex-1 w-full max-w-md">
+                <img src="profile_pic.png" alt="Profile" class="rounded-3xl w-full object-cover shadow-2xl border-4 border-slate-800">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8"><span class="text-primary">01.</span> About Me</h2>
+            <div class="bg-dark p-8 rounded-2xl border border-slate-800 shadow-lg">
+                <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                    I am an Electronics and Communication Engineering student looking to secure a challenging entry-level position. My goal is to apply my skills in electronics, programming, and problem-solving to contribute to organizational growth and enhance my technical expertise.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="p-6 bg-slate-800 rounded-xl border border-slate-700">
+                        <i class="fas fa-code text-3xl text-primary mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Software</h3>
+                        <p class="text-slate-400">C, Python, HTML5, CSS3, JavaScript</p>
+                    </div>
+                    <div class="p-6 bg-slate-800 rounded-xl border border-slate-700">
+                        <i class="fas fa-microchip text-3xl text-primary mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Hardware</h3>
+                        <p class="text-slate-400">MULTISIM, MATLAB, TASM, ARDUINO</p>
+                    </div>
+                    <div class="p-6 bg-slate-800 rounded-xl border border-slate-700">
+                        <i class="fas fa-users text-3xl text-primary mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Soft Skills</h3>
+                        <p class="text-slate-400">Communication, Team Management, Problem-solving</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education Section -->
+    <section id="experience" class="py-20 bg-dark border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-12"><span class="text-primary">02.</span> Experience & Education</h2>
+            
+            <div class="flex flex-col gap-12">
+                <!-- Experience -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-6 flex items-center gap-2"><i class="fas fa-briefcase text-primary"></i> Work Experience</h3>
+                    
+                    <div class="relative border-l-2 border-slate-700 pl-6 pb-4">
+                        <div class="absolute w-4 h-4 bg-primary rounded-full -left-[9px] top-1"></div>
+                        <h4 class="text-xl font-bold text-white">Telecom Intern</h4>
+                        <p class="text-primary font-medium mb-2">BSNL, VIZAG | June 2025 - July 2025</p>
+                        <ul class="list-disc list-inside text-slate-400 space-y-2 mt-4">
+                            <li>Gained practical exposure to operation and maintenance of modern telecommunication networks.</li>
+                            <li>Worked with Optical Fiber Communication systems, understanding their role in national broadband.</li>
+                            <li>Acquired knowledge of network fundamentals, hardware design, and VLSI concepts.</li>
+                            <li>Refined proficiency in network solutions, product development, and troubleshooting.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-6 flex items-center gap-2"><i class="fas fa-graduation-cap text-primary"></i> Education</h3>
+                    
+                    <div class="relative border-l-2 border-slate-700 pl-6 pb-4">
+                        <div class="absolute w-4 h-4 bg-primary rounded-full -left-[9px] top-1"></div>
+                        <h4 class="text-xl font-bold text-white">B.Tech in Electronics and Communication Engineering</h4>
+                        <p class="text-primary font-medium mb-2">Rama Chandra College Of Engineering | June 2023 - May 2027</p>
+                        <p class="text-slate-400 mt-2">Eluru, Andhra Pradesh, India</p>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                 <section id="certifications" class="py-20 bg-slate-900 border-t border-slate-800">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-white mb-6 flex items-center gap-2"><i class="fas fa-certificate text-primary"></i> Certifications</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                                <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-award text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm md:text-base">C Programming</h4>
+                                    <p class="text-slate-400 text-xs mt-1">Coursera</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                                <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-award text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm md:text-base">Web Technology</h4>
+                                    <p class="text-slate-400 text-xs mt-1">Simplilearn</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                                <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-award text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm md:text-base">Python Essentials-1,2</h4>
+                                    <p class="text-slate-400 text-xs mt-1">Cisco Academy</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                                <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-award text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm md:text-base">Machine Learning & Deep Learning</h4>
+                                    <p class="text-slate-400 text-xs mt-1">NPTEL</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                                <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-award text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm md:text-base">Quantum Fundamentals Program</h4>
+                                    <p class="text-slate-400 text-xs mt-1">Amaravathi Quantum Valley</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                                <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-laptop-code text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm md:text-base">24-Hour Hackathon (Web Tech)</h4>
+                                    <p class="text-slate-400 text-xs mt-1">NRI Institute of Technology</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center md:col-span-2 lg:col-span-1">
+                                <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-brain text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm md:text-base">Artificial Intelligence Fundamentals</h4>
+                                    <p class="text-slate-400 text-xs mt-1">IBM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    <!-- Workshops -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-6 flex items-center gap-2"><i class="fas fa-tools text-primary"></i> Workshops Attended</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        
+                        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                            <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-microchip text-xl"></i></div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm md:text-base">PCB Design & Fabrication</h4>
+                                <p class="text-slate-400 text-xs mt-1">Hands-on Training</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary transition-colors flex gap-4 items-center">
+                            <div class="bg-slate-900 text-primary w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fas fa-wifi text-xl"></i></div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm md:text-base">IoT (Internet of Things) Session</h4>
+                                <p class="text-slate-400 text-xs mt-1">Dept. of ECE, RCE</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8"><span class="text-primary">03.</span> Featured Projects</h2>
+            
+            <!-- Project Filters -->
+            <div class="flex flex-wrap gap-4 justify-center mb-12">
+                <button data-filter="all" class="filter-btn px-6 py-2 rounded-full bg-primary text-white font-medium transition-colors">All Projects</button>
+                <button data-filter="hardware" class="filter-btn px-6 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white transition-colors">Hardware & IoT</button>
+                <button data-filter="software" class="filter-btn px-6 py-2 rounded-full bg-slate-800 text-slate-300 hover:text-white transition-colors">Software & Web</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1 -->
+                <div data-category="software" class="project-card bg-dark rounded-xl overflow-hidden border border-slate-800 shadow-lg group">
+                    <div class="h-48 overflow-hidden relative">
+                        <a href="https://peerlix1.netlify.app" target="_blank">
+                            <img src="peerlix.png" alt="Peerlix Web App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1e293b/cbd5e1?text=Peerlix+Project'">
+                        </a>
+                        <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">Hackathon Project</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">
+                            <a href="https://peerlix1.netlify.app" target="_blank" class="hover:text-primary transition-colors">
+                                Peerlix <i class="fas fa-external-link-alt text-sm ml-1 text-slate-400"></i>
+                            </a>
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-4">Developed a responsive web application to enable collaborative skill sharing. Built dynamic features for adding/viewing user skills, enhancing UI/UX.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">HTML5</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">CSS3</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div data-category="hardware" class="project-card bg-dark rounded-xl overflow-hidden border border-slate-800 shadow-lg group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="smart%20waste%20management.jpeg" alt="Smart Waste Management" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1e293b/cbd5e1?text=Smart+Bin+Project'">
+                        <div class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">IoT / Hardware</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Smart Waste Management</h3>
+                        <p class="text-slate-400 text-sm mb-4">Prototyped a smart bin using ultrasonic sensors for level detection and weight sensors for capacity measurement, integrated with an Arduino.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Arduino</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Sensors</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">C++</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div data-category="hardware" class="project-card bg-dark rounded-xl overflow-hidden border border-slate-800 shadow-lg group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="solar%20tracking.jpeg" alt="Adaptive Solar Tracking" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1e293b/cbd5e1?text=Solar+Tracker'">
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full">Electronics</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Adaptive Solar Tracking</h3>
+                        <p class="text-slate-400 text-sm mb-4">Designed a mechanical/electronic system to adjust solar panels for maximum efficiency by maintaining perpendicular alignment with sunlight.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Hardware Design</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Electronics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 (Portfolio itself) -->
+                <div data-category="software" class="project-card bg-dark rounded-xl overflow-hidden border border-slate-800 shadow-lg group">
+                    <div class="h-48 overflow-hidden relative bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-laptop-code text-6xl text-primary group-hover:scale-110 transition-transform duration-500"></i>
+                        <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">Web Dev</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Interactive Developer Portfolio</h3>
+                        <p class="text-slate-400 text-sm mb-4">Designed and developed a responsive personal portfolio website from scratch. Implemented core vanilla Javascript for custom UI elements and filtering.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">HTML</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Tailwind CSS</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-white mb-10"><span class="text-primary">04.</span> Let's Connect</h2>
+            
+            <div class="bg-dark p-8 rounded-xl border border-slate-800 shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Email Card -->
+                    <div class="flex items-center gap-5 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-primary transition-colors">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full text-2xl shrink-0">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-400 text-sm font-medium mb-1">Email Me</h3>
+                            <a href="mailto:nukalajayasurya@gmail.com" class="text-white hover:text-primary transition-colors font-medium break-all">nukalajayasurya@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <!-- Phone Card -->
+                    <div class="flex items-center gap-5 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-primary transition-colors">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full text-2xl shrink-0">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-400 text-sm font-medium mb-1">Call Me</h3>
+                            <a href="tel:+916281097949" class="text-white hover:text-primary transition-colors font-medium">+91-6281097949</a>
+                        </div>
+                    </div>
+
+                    <!-- Location Card -->
+                    <div class="flex items-center gap-5 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-primary transition-colors">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full text-2xl shrink-0">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-400 text-sm font-medium mb-1">Location</h3>
+                            <p class="text-white font-medium">Eluru-534001, AP, India</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Networks Card -->
+                    <div class="flex items-center gap-5 p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-primary transition-colors">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full text-2xl shrink-0">
+                            <i class="fas fa-share-nodes"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-400 text-sm font-medium mb-1">Social Profiles</h3>
+                            <div class="flex gap-4 mt-1">
+                                <a href="https://www.linkedin.com/in/jaya-surya-nukala" target="_blank" class="text-white hover:text-blue-500 text-2xl transition-transform hover:scale-110" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/surya-nukala" target="_blank" class="text-white hover:text-primary text-2xl transition-transform hover:scale-110" title="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-8 text-center text-slate-500 border-t border-slate-800">
+        <p>&copy; 2026 Nukala Jaya Surya. Built with HTML, CSS, and JS.</p>
+    </footer>
+
+    <!-- JAVASCRIPT SECTION (Simplified) -->
+    <script>
+        /* 
+           FEATURE 1: MOBILE MENU TOGGLE
+           This shows and hides the navigation menu when viewed on a mobile phone.
+        */
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', function() {
+            // "toggle" adds the 'hidden' class if it's missing, or removes it if it's there
+            mobileMenu.classList.toggle('hidden'); 
+        });
+
+
+        /* 
+           FEATURE 2: BASIC PROJECT FILTERING
+           This allows users to click "Hardware" or "Software" to only see those projects.
+        */
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        // Loop through every button
+        filterButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                
+                // 1. Change Button Colors (Make clicked button blue, others dark)
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary');
+                    btn.classList.add('bg-slate-800');
+                });
+                button.classList.remove('bg-slate-800');
+                button.classList.add('bg-primary');
+
+                // 2. Get the category we want to filter by (all, hardware, software)
+                const filterValue = button.getAttribute('data-filter');
+
+                // 3. Show or hide projects based on category
+                projectCards.forEach(function(card) {
+                    const cardCategory = card.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || filterValue === cardCategory) {
+                        card.style.display = 'block'; // Show it
+                    } else {
+                        card.style.display = 'none';  // Hide it
+                    }
+                });
+            });
+        });
+
+
+        /* 
+           FEATURE 3: SIMPLE TYPING EFFECT
+           This types out words one letter at a time in the Hero section.
+        */
+        const wordsToType = ["Hardware Solutions.", "Web Applications.", "IoT Devices."];
+        const textElement = document.getElementById("typing-text");
+        
+        let wordIndex = 0; // Which word are we currently typing?
+        let charIndex = 0; // Which character of the word are we on?
+        let isDeleting = false; // Are we typing or backspacing?
+
+        function simpleTypingEffect() {
+            const currentWord = wordsToType[wordIndex];
+            
+            // If typing forward
+            if (!isDeleting) {
+                // Add one letter
+                textElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                
+                // If word is finished typing, wait a bit, then start deleting
+                if (charIndex === currentWord.length) {
+                    isDeleting = true;
+                    setTimeout(simpleTypingEffect, 1500); // Wait 1.5 seconds at the end of a word
+                    return;
+                }
+            } 
+            // If deleting backward
+            else {
+                // Remove one letter
+                textElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                
+                // If word is fully deleted, move to the next word
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex++;
+                    // If we reached the end of the list, go back to the first word
+                    if (wordIndex === wordsToType.length) {
+                        wordIndex = 0;
+                    }
+                }
+            }
+
+            // Determine speed: deleting is faster than typing
+            const speed = isDeleting ? 50 : 150;
+            setTimeout(simpleTypingEffect, speed);
+        }
+
+        // Start the typing effect
+        simpleTypingEffect();
+
+
+        /* 
+           FEATURE 4: THEME CHANGER (Dark / Light Mode)
+           This listens for clicks on the Sun/Moon icons and changes the website colors.
+        */
+        const body = document.body;
+        const themeBtnDesktop = document.getElementById('theme-toggle');
+        const themeIconDesktop = document.getElementById('theme-icon');
+        const themeBtnMobile = document.getElementById('mobile-theme-toggle');
+        const themeIconMobile = document.getElementById('mobile-theme-icon');
+
+        function toggleTheme() {
+            // This adds 'light-mode' to the body if it's missing, or removes it if it's there
+            body.classList.toggle('light-mode');
+            
+            // Swap the icons between the Moon (dark mode) and Sun (light mode)
+            if (body.classList.contains('light-mode')) {
+                themeIconDesktop.classList.replace('fa-sun', 'fa-moon');
+                if (themeIconMobile) themeIconMobile.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                themeIconDesktop.classList.replace('fa-moon', 'fa-sun');
+                if (themeIconMobile) themeIconMobile.classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+
+        // Listen for clicks on the buttons
+        themeBtnDesktop.addEventListener('click', toggleTheme);
+        if (themeBtnMobile) {
+            themeBtnMobile.addEventListener('click', toggleTheme);
+        }
+    </script>
+</body>
+</html>
